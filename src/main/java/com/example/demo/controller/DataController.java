@@ -7,10 +7,11 @@ import java.util.*;
 @RequestMapping("/api")
 public class DataController {
 
-    @GetMapping("/users")
-    public List<Map<String, Object>> getUsers() {
-        List<Map<String, Object>> users = new ArrayList<>();
+    // 메모리에 사용자 저장 (데모용)
+    private static List<Map<String, Object>> users = new ArrayList<>();
+    private static int nextId = 4;
 
+    static {
         users.add(Map.of(
             "id", 1,
             "name", "김철수",
@@ -29,17 +30,47 @@ public class DataController {
             "email", "park@example.com",
             "age", 25
         ));
+    }
 
-        return users;
+    @GetMapping("/users")
+    public List<Map<String, Object>> getUsers() {
+        return new ArrayList<>(users);
     }
 
     @PostMapping("/users")
     public Map<String, Object> createUser(@RequestBody Map<String, Object> user) {
-        user.put("id", new Random().nextInt(1000));
-        user.put("created", new Date().toString());
+        // 유효성 검사
+        if (!user.containsKey("name") || user.get("name").toString().trim().isEmpty()) {
+            return Map.of(
+                "success", false,
+                "message", "이름을 입력해주세요."
+            );
+        }
+        if (!user.containsKey("email") || user.get("email").toString().trim().isEmpty()) {
+            return Map.of(
+                "success", false,
+                "message", "이메일을 입력해주세요."
+            );
+        }
+        if (!user.containsKey("age")) {
+            return Map.of(
+                "success", false,
+                "message", "나이를 입력해주세요."
+            );
+        }
+
+        // 새 사용자 생성
+        Map<String, Object> newUser = new HashMap<>();
+        newUser.put("id", nextId++);
+        newUser.put("name", user.get("name"));
+        newUser.put("email", user.get("email"));
+        newUser.put("age", user.get("age"));
+
+        users.add(newUser);
+
         return Map.of(
             "success", true,
-            "data", user,
+            "data", newUser,
             "message", "사용자가 생성되었습니다."
         );
     }

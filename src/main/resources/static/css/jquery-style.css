@@ -158,6 +158,7 @@ header h1 {
 }
 
 .loading {
+    display: none;
     text-align: center;
     padding: 2rem;
     color: #667eea;

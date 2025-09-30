@@ -37,7 +37,7 @@
                     <div th:replace="~{fragments/components :: inputField('name', '이름', '이름을 입력하세요', 'text')}"></div>
                     <div th:replace="~{fragments/components :: inputField('email', '이메일', '이메일을 입력하세요', 'email')}"></div>
                     <div th:replace="~{fragments/components :: inputField('age', '나이', '나이를 입력하세요', 'number')}"></div>
-                    <button type="submit" th:replace="~{fragments/components :: button('추가하기', 'primary', 'add-user')}"></button>
+                    <button th:replace="~{fragments/components :: button('추가하기', 'primary', null, null, null, 'submit')}"></button>
                 </form>
                 <div id="message" class="message"></div>
             </div>
@@ -46,14 +46,14 @@
                 <div class="list-header">
                     <h2>사용자 목록 <span id="filter-count"></span></h2>
                     <div class="filter-buttons">
-                        <button th:replace="~{fragments/components :: button('전체', 'secondary', 'filter-all')}" class="filter-btn active" data-filter="all"></button>
-                        <button th:replace="~{fragments/components :: button('성인만 (18+)', 'secondary', 'filter-active')}" class="filter-btn" data-filter="active"></button>
-                        <button th:replace="~{fragments/components :: button('최신 3명', 'secondary', 'filter-new')}" class="filter-btn" data-filter="new"></button>
+                        <button th:replace="~{fragments/components :: button('전체', 'secondary filter-btn active', null, 'all', null, null)}"></button>
+                        <button th:replace="~{fragments/components :: button('성인만 (18+)', 'secondary filter-btn', null, 'active', null, null)}"></button>
+                        <button th:replace="~{fragments/components :: button('최신 3명', 'secondary filter-btn', null, 'new', null, null)}"></button>
                     </div>
                 </div>
-                <button id="refreshBtn" th:replace="~{fragments/components :: button('새로고침', 'secondary', 'refresh')}"></button>
+                <button th:replace="~{fragments/components :: button('새로고침', 'secondary', 'refreshBtn', null, null, null)}"></button>
 
-                <div id="loading" style="display: none; text-align: center; margin: 1rem 0;">
+                <div id="loading" class="loading">
                     <div th:replace="~{fragments/components :: spinner('medium')}"></div>
                 </div>
 

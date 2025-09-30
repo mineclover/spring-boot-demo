@@ -15,113 +15,164 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             padding: 2rem;
         }
         .container {
-            text-align: center;
             color: white;
-            max-width: 1200px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
         }
         h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
         }
         .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
+            font-size: 1rem;
             opacity: 0.9;
         }
+        .content-wrapper {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
         .links-section {
-            background: rgba(255,255,255,0.1);
+            flex: 0 0 400px;
+            background: rgba(255,255,255,0.15);
             padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 3rem;
+            border-radius: 16px;
             backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
         }
         .links-section h3 {
             margin-bottom: 1.5rem;
             font-size: 1.5rem;
+            font-weight: 600;
         }
         .links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
         }
         .link-item {
-            background: rgba(255,255,255,0.15);
-            padding: 1rem;
-            border-radius: 8px;
-            transition: all 0.3s;
+            position: relative;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
         }
         .link-item:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-2px);
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            border-color: rgba(255,255,255,0.4);
         }
         .link-item a {
+            display: block;
+            padding: 1rem;
             color: white;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.95rem;
         }
-        .link-item a:hover {
-            text-decoration: underline;
+        .link-item .link-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.3rem;
         }
         .link-desc {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 0.3rem;
+            font-size: 0.8rem;
+            opacity: 0.85;
+            font-weight: 400;
+        }
+        .cards-section {
+            flex: 1;
+            min-width: 0;
         }
         .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            .links-section {
+                flex: 1;
+                width: 100%;
+            }
+            .links-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🚀 Spring Boot Demo</h1>
-        <p class="subtitle">jQuery + Thymeleaf SSR 데모</p>
+        <div class="header">
+            <h1>🚀 Spring Boot Demo</h1>
+            <p class="subtitle">jQuery + Thymeleaf SSR 데모</p>
+        </div>
 
-        <div class="links-section">
+        <div class="content-wrapper">
+            <div class="links-section">
             <h3>📑 Available Endpoints</h3>
             <div class="links-grid">
                 <div class="link-item">
-                    <a href="http://localhost:8080/">🏠 Home</a>
-                    <div class="link-desc">메인 페이지</div>
+                    <a href="http://localhost:8080/">
+                        <div class="link-title">🏠 Home</div>
+                        <div class="link-desc">메인 페이지</div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="http://localhost:8080/jquery">💻 jQuery Demo</a>
-                    <div class="link-desc">상태 관리 데모</div>
+                    <a href="http://localhost:8080/jquery">
+                        <div class="link-title">💻 jQuery Demo</div>
+                        <div class="link-desc">상태 관리 데모</div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="http://localhost:8080/session">🔐 Session Demo</a>
-                    <div class="link-desc">세션 관리 데모</div>
+                    <a href="http://localhost:8080/session">
+                        <div class="link-title">🔐 Session Demo</div>
+                        <div class="link-desc">세션 관리 데모</div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="http://localhost:8080/components">🎨 Components</a>
-                    <div class="link-desc">UI 컴포넌트 라이브러리</div>
+                    <a href="http://localhost:8080/components">
+                        <div class="link-title">🎨 Components</div>
+                        <div class="link-desc">UI 컴포넌트 라이브러리</div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="http://localhost:8080/api/hello">📡 Hello API</a>
-                    <div class="link-desc">REST API 테스트</div>
+                    <a href="http://localhost:8080/api/hello">
+                        <div class="link-title">📡 Hello API</div>
+                        <div class="link-desc">REST API 테스트</div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="http://localhost:8080/api/users">👥 Users API</a>
-                    <div class="link-desc">사용자 목록 조회</div>
+                    <a href="http://localhost:8080/api/users">
+                        <div class="link-title">👥 Users API</div>
+                        <div class="link-desc">사용자 목록 조회</div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="http://localhost:8080/api/stats">📊 Stats API</a>
-                    <div class="link-desc">통계 정보 조회</div>
+                    <a href="http://localhost:8080/api/stats">
+                        <div class="link-title">📊 Stats API</div>
+                        <div class="link-desc">통계 정보 조회</div>
+                    </a>
                 </div>
             </div>
-        </div>
+            </div>
 
-        <div class="cards">
+            <div class="cards-section">
+                <div class="cards">
             <div th:replace="~{fragments/components :: card(
                 'jQuery 상태 관리',
                 '서버 사이드 렌더링(SSR)과 jQuery를 사용한 상태 관리 데모',
@@ -145,6 +196,8 @@
                 '/components',
                 '데모 보기'
             )}"></div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

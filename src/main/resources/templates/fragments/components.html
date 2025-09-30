@@ -14,11 +14,14 @@
 </div>
 
 <!-- Button 컴포넌트 -->
-<button th:fragment="button(text, type, dataAction)"
-        th:class="${'btn btn-' + type}"
-        th:attr="data-action=${dataAction}"
-        th:text="${text}">
-</button>
+<th:block th:fragment="button(text, type, id, dataFilter, dataAction, buttonType)">
+    <button th:class="${'btn btn-' + type}"
+            th:id="${id}"
+            th:attr="data-filter=${dataFilter}, data-action=${dataAction}"
+            th:type="${buttonType != null ? buttonType : 'button'}"
+            th:text="${text}">
+    </button>
+</th:block>
 
 <!-- Alert 컴포넌트 -->
 <div th:fragment="alert(message, type)"
@@ -48,12 +51,6 @@
     <div class="spinner-inner"></div>
 </div>
 
-<!-- Modal Header 컴포넌트 -->
-<div th:fragment="modalHeader(title)" class="modal-header">
-    <h3 th:text="${title}"></h3>
-    <button class="modal-close" onclick="closeModal()">×</button>
-</div>
-
 <!-- Input Field 컴포넌트 -->
 <div th:fragment="inputField(id, label, placeholder, type)" class="form-group">
     <label th:for="${id}" th:text="${label}"></label>
@@ -64,4 +61,11 @@
 </div>
 
 </body>
+
+<!-- Modal Header 컴포넌트 - close button을 span으로 변경하여 button fragment와 충돌 방지 -->
+<div th:fragment="modalHeader(title)" class="modal-header" xmlns:th="http://www.thymeleaf.org">
+    <h3 th:text="${title}"></h3>
+    <span class="modal-close" onclick="closeModal()" style="cursor: pointer;">×</span>
+</div>
+
 </html>

@@ -16,7 +16,7 @@
             <h1>🔐 세션 관리 데모</h1>
             <div class="current-user">
                 <span id="loginStatus">로그인되지 않음</span>
-                <button id="logoutBtn" th:replace="~{fragments/components :: button('로그아웃', 'danger', 'logout')}" style="display:none;"></button>
+                <button id="logoutBtn" th:replace="~{fragments/components :: button('로그아웃', 'danger', 'logoutBtn', null, 'logout', null)}" style="display:none;"></button>
             </div>
         </header>
 
@@ -40,14 +40,14 @@
             <main class="board-main">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <h2>📝 공유 게시판</h2>
-                    <button id="restoreDemoBtn" th:replace="~{fragments/components :: button('데모 게시글 복원', 'secondary', 'restore-demo')}" style="display:none;"></button>
+                    <button id="restoreDemoBtn" th:replace="~{fragments/components :: button('데모 게시글 복원', 'secondary', 'restoreDemoBtn', null, 'restore-demo', null)}" style="display:none;"></button>
                 </div>
 
                 <!-- 게시글 작성 폼 -->
                 <div id="postForm" class="post-form" style="display:none;">
                     <div th:replace="~{fragments/components :: inputField('postTitle', '제목', '제목을 입력하세요', 'text')}"></div>
                     <textarea id="postContent" placeholder="내용" class="form-textarea"></textarea>
-                    <button id="submitPost" th:replace="~{fragments/components :: button('게시글 작성', 'primary', 'submit-post')}"></button>
+                    <button id="submitPost" th:replace="~{fragments/components :: button('게시글 작성', 'primary', 'submitPost', null, 'submit-post', null)}"></button>
                 </div>
                 <div id="loginRequired" class="login-required">
                     <div th:replace="~{fragments/components :: alert('게시글 작성은 로그인 후 가능합니다', 'warning')}"></div>

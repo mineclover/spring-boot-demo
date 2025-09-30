@@ -124,16 +124,16 @@
             <h2>Button Components</h2>
             <div class="component-showcase">
                 <div class="component-row">
-                    <button th:replace="~{fragments/components :: button('Primary Button', 'primary', 'primary-action')}" onclick="alert('Primary clicked!')"></button>
-                    <button th:replace="~{fragments/components :: button('Secondary Button', 'secondary', 'secondary-action')}" onclick="alert('Secondary clicked!')"></button>
-                    <button th:replace="~{fragments/components :: button('Success Button', 'success', 'success-action')}" onclick="alert('Success clicked!')"></button>
-                    <button th:replace="~{fragments/components :: button('Danger Button', 'danger', 'danger-action')}" onclick="alert('Danger clicked!')"></button>
+                    <button th:replace="~{fragments/components :: button('Primary Button', 'primary', null, null, 'primary-action', null)}"></button>
+                    <button th:replace="~{fragments/components :: button('Secondary Button', 'secondary', null, null, 'secondary-action', null)}"></button>
+                    <button th:replace="~{fragments/components :: button('Success Button', 'success', null, null, 'success-action', null)}"></button>
+                    <button th:replace="~{fragments/components :: button('Danger Button', 'danger', null, null, 'danger-action', null)}"></button>
                 </div>
             </div>
 
             <div class="code-block">
                 <code>
-&lt;button th:replace="~{fragments/components :: button('Text', 'primary', 'action-id')}" onclick="yourFunction()"&gt;&lt;/button&gt;
+&lt;button th:replace="~{fragments/components :: button('Text', 'primary', 'btn-id', null, null, 'button')}"&gt;&lt;/button&gt;
                 </code>
             </div>
         </div>

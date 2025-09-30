@@ -123,10 +123,14 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(userData),
             success: function(response) {
-                showMessage(response.message, 'success');
-                $('#userForm')[0].reset();
-                loadUsers();
-                loadStats();
+                if (response.success) {
+                    showMessage(response.message, 'success');
+                    $('#userForm')[0].reset();
+                    loadUsers();
+                    loadStats();
+                } else {
+                    showMessage(response.message, 'error');
+                }
             },
             error: function() {
                 showMessage('사용자 추가에 실패했습니다.', 'error');
