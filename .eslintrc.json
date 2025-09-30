@@ -1,0 +1,40 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jquery": true
+  },
+  "extends": [
+    "airbnb-base"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "script"
+  },
+  "globals": {
+    "AppState": "readonly",
+    "Toast": "readonly",
+    "Confirm": "readonly"
+  },
+  "rules": {
+    "indent": ["error", 4],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "no-console": "warn",
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "max-len": ["error", { "code": 120, "ignoreUrls": true }],
+    "comma-dangle": ["error", "never"],
+    "no-plusplus": "off",
+    "func-names": "off",
+    "no-param-reassign": "off",
+    "prefer-arrow-callback": "off",
+    "object-shorthand": "off",
+    "vars-on-top": "off",
+    "no-var": "off",
+    "prefer-template": "off",
+    "prefer-destructuring": "off",
+    "no-use-before-define": ["error", { "functions": false }],
+    "radix": ["error", "as-needed"]
+  }
+}

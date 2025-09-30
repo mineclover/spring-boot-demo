@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     let currentUser = null;
 
     // 초기화
@@ -8,9 +8,9 @@ $(document).ready(function() {
 
     // 사용자 목록 로드
     function loadUsers() {
-        $.get('/session/users', function(users) {
+        $.get('/session/users', function (users) {
             $('#userList').empty();
-            users.forEach(function(user) {
+            users.forEach(function (user) {
                 const badge = user.role === 'ADMIN' ? '<span style="color:#f39c12">★</span>' : '';
                 $('#userList').append(`
                     <div class="user-card" data-id="${user.id}">
@@ -22,7 +22,7 @@ $(document).ready(function() {
             });
 
             // 클릭 이벤트
-            $('.user-card').click(function() {
+            $('.user-card').click(function () {
                 const userId = $(this).data('id');
                 login(userId);
             });
@@ -36,7 +36,7 @@ $(document).ready(function() {
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ userId: userId }),
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     currentUser = response.user;
                     updateUI();
@@ -49,8 +49,8 @@ $(document).ready(function() {
     }
 
     // 로그아웃
-    $('#logoutBtn').click(function() {
-        $.post('/session/logout', function(response) {
+    $('#logoutBtn').click(function () {
+        $.post('/session/logout', function (response) {
             currentUser = null;
             updateUI();
             loadPosts();
@@ -60,7 +60,7 @@ $(document).ready(function() {
 
     // 현재 사용자 정보 로드
     function loadCurrentUser() {
-        $.get('/session/current', function(response) {
+        $.get('/session/current', function (response) {
             if (response.loggedIn) {
                 currentUser = response.user;
                 updateUI();
@@ -98,7 +98,7 @@ $(document).ready(function() {
 
     // 개인 정보 로드
     function loadPersonalInfo() {
-        $.get('/session/my-info', function(response) {
+        $.get('/session/my-info', function (response) {
             if (response.error) {
                 $('#personalInfo').html(`<p class="no-data">${response.error}</p>`);
                 return;
@@ -106,7 +106,7 @@ $(document).ready(function() {
 
             const user = response.user;
             const privateData = response.privateData;
-            
+
             $('#personalInfo').html(`
                 <div class="info-item"><strong>사용자명:</strong>${user.username}</div>
                 <div class="info-item"><strong>이메일:</strong>${user.email}</div>
@@ -122,20 +122,20 @@ $(document).ready(function() {
 
     // 게시글 목록 로드
     function loadPosts() {
-        $.get('/session/posts', function(posts) {
+        $.get('/session/posts', function (posts) {
             $('#postList').empty();
-            
+
             if (posts.length === 0) {
                 $('#postList').html('<p class="no-data">게시글이 없습니다</p>');
                 return;
             }
 
-            posts.forEach(function(post) {
-                const canDelete = currentUser && 
-                    (post.authorId === currentUser.id || currentUser.role === 'ADMIN');
-                
-                const deleteBtn = canDelete ? 
-                    `<button class="btn btn-delete" onclick="deletePost(${post.id})">삭제</button>` : '';
+            posts.forEach(function (post) {
+                const canDelete = currentUser
+                    && (post.authorId === currentUser.id || currentUser.role === 'ADMIN');
+
+                const deleteBtn = canDelete
+                    ? `<button class="btn btn-delete" onclick="deletePost(${post.id})">삭제</button>` : '';
 
                 const authorBadge = post.authorName === '관리자' ? '<span style="color:#f39c12">★</span>' : '';
 
@@ -159,7 +159,7 @@ $(document).ready(function() {
     }
 
     // 게시글 작성
-    $('#submitPost').click(function() {
+    $('#submitPost').click(function () {
         const title = $('#postTitle').val().trim();
         const content = $('#postContent').val().trim();
 
@@ -173,7 +173,7 @@ $(document).ready(function() {
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ title, content }),
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     $('#postTitle').val('');
                     $('#postContent').val('');
@@ -187,14 +187,14 @@ $(document).ready(function() {
     });
 
     // 게시글 삭제 (전역 함수)
-    window.deletePost = async function(postId) {
+    window.deletePost = async function (postId) {
         const confirmed = await Confirm.show('정말 삭제하시겠습니까?', '게시글 삭제');
         if (!confirmed) return;
 
         $.ajax({
             url: `/session/posts/${postId}`,
             method: 'DELETE',
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     Toast.success(response.message);
                     loadPosts();
@@ -218,14 +218,14 @@ $(document).ready(function() {
     }
 
     // 데모 게시글 복원
-    $('#restoreDemoBtn').click(async function() {
+    $('#restoreDemoBtn').click(async function () {
         const confirmed = await Confirm.show('데모 게시글을 복원하시겠습니까?', '데모 복원');
         if (!confirmed) return;
 
         $.ajax({
             url: '/session/posts/restore-demo',
             method: 'POST',
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     Toast.success(response.message);
                     loadPosts();

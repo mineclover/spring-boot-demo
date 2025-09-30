@@ -22,6 +22,15 @@ Thymeleaf 템플릿 엔진과 jQuery를 활용한 사용자 관리 및 세션 �
 - **Docker** (컨테이너화)
 - **Docker Compose** (오케스트레이션)
 
+### Code Quality
+- **Checkstyle** (Java 코드 스타일 검사)
+- **PMD** (Java 정적 분석)
+- **SpotBugs** (버그 패턴 검색)
+- **ESLint** (JavaScript 린팅)
+- **JaCoCo** (테스트 커버리지)
+- **Husky** (Git pre-commit hooks)
+- **GitHub Actions** (CI/CD 파이프라인)
+
 ## 실행 방법
 
 ### 로컬 실행
@@ -117,6 +126,67 @@ http://localhost:8080
 - 본인 게시글만 삭제 가능
 - 관리자는 모든 게시글 삭제 가능
 - Toast 알림 시스템
+
+## 품질 관리
+
+### 코드 품질 도구 실행
+
+#### 모든 품질 검사 실행
+```bash
+./gradlew qualityCheck
+```
+
+#### 개별 도구 실행
+```bash
+# Java 코드 스타일 검사
+./gradlew checkstyleMain checkstyleTest
+
+# PMD 정적 분석
+./gradlew pmdMain pmdTest
+
+# SpotBugs 버그 검색
+./gradlew spotbugsMain
+
+# 테스트 및 커버리지
+./gradlew test jacocoTestReport
+
+# JavaScript 린팅
+npm run lint
+npm run lint:fix  # 자동 수정
+```
+
+#### 리포트 확인
+- **Checkstyle**: `build/reports/checkstyle/main.html`
+- **PMD**: `build/reports/pmd/main.html`
+- **SpotBugs**: `build/reports/spotbugs/main.html`
+- **JaCoCo**: `build/reports/jacoco/test/html/index.html`
+- **Test**: `build/reports/tests/test/index.html`
+
+### Pre-commit Hooks
+
+Git commit 전에 자동으로 코드 품질 검사가 실행됩니다.
+
+```bash
+# Husky 및 의존성 설치
+npm install
+
+# pre-commit hook 설치 (자동)
+npm run prepare
+```
+
+커밋 시 다음이 자동 실행됩니다:
+- JavaScript: ESLint (자동 수정)
+- Java: Checkstyle, PMD
+
+### CI/CD
+
+GitHub Actions를 통한 자동화된 품질 검사:
+- **Push/PR 시 자동 실행**
+- 코드 품질 검사 (Checkstyle, PMD, SpotBugs, ESLint)
+- 테스트 실행 및 커버리지 측정
+- Docker 이미지 빌드 (main 브랜치)
+
+워크플로우 파일: `.github/workflows/ci.yml`
 
 ### 4. UI 컴포넌트 라이브러리
 - **Card** - 정보 카드

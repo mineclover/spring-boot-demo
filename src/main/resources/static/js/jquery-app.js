@@ -6,13 +6,13 @@ var AppState = {
     filter: 'all', // 'all', 'active', 'new'
 
     // 상태 업데이트 및 렌더링
-    setState: function(newState) {
+    setState: function (newState) {
         $.extend(this, newState);
         this.render();
     },
 
     // 상태 기반 렌더링
-    render: function() {
+    render: function () {
         // 통계 렌더링
         $('#totalUsers').text(this.stats.totalUsers || '-');
         $('#activeUsers').text(this.stats.activeUsers || '-');
@@ -34,7 +34,7 @@ var AppState = {
     },
 
     // 필터링된 사용자 목록 렌더링
-    renderUsers: function() {
+    renderUsers: function () {
         var filteredUsers = this.getFilteredUsers();
         $('#userTableBody').empty();
 
@@ -43,13 +43,13 @@ var AppState = {
             return;
         }
 
-        filteredUsers.forEach(function(user) {
-            var row = '<tr>' +
-                '<td>' + user.id + '</td>' +
-                '<td>' + user.name + '</td>' +
-                '<td>' + user.email + '</td>' +
-                '<td>' + user.age + '</td>' +
-                '</tr>';
+        filteredUsers.forEach(function (user) {
+            var row = '<tr>'
+                + '<td>' + user.id + '</td>'
+                + '<td>' + user.name + '</td>'
+                + '<td>' + user.email + '</td>'
+                + '<td>' + user.age + '</td>'
+                + '</tr>';
             $('#userTableBody').append(row);
         });
 
@@ -57,15 +57,15 @@ var AppState = {
     },
 
     // 필터 적용
-    getFilteredUsers: function() {
+    getFilteredUsers: function () {
         if (this.filter === 'all') return this.users;
-        if (this.filter === 'active') return this.users.filter(u => u.age >= 18);
+        if (this.filter === 'active') return this.users.filter((u) => u.age >= 18);
         if (this.filter === 'new') return this.users.slice(0, 3);
         return this.users;
     }
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
     // 초기 데이터 로드
     loadStats();
     loadUsers();
@@ -75,10 +75,11 @@ $(document).ready(function() {
         $.ajax({
             url: '/api/stats',
             method: 'GET',
-            success: function(data) {
+            success: function (data) {
                 AppState.setState({ stats: data });
             },
-            error: function() {
+            error: function () {
+                // eslint-disable-next-line no-console
                 console.error('통계 데이터 로드 실패');
             }
         });
@@ -92,14 +93,14 @@ $(document).ready(function() {
         $.ajax({
             url: '/api/users',
             method: 'GET',
-            success: function(users) {
+            success: function (users) {
                 $('#loading').hide();
                 AppState.setState({
                     users: users,
                     loading: false
                 });
             },
-            error: function() {
+            error: function () {
                 $('#loading').hide();
                 AppState.setState({ loading: false });
                 showMessage('사용자 목록 로드에 실패했습니다.', 'error');
@@ -108,7 +109,7 @@ $(document).ready(function() {
     }
 
     // 폼 제출
-    $('#userForm').on('submit', function(e) {
+    $('#userForm').on('submit', function (e) {
         e.preventDefault();
 
         var userData = {
@@ -122,7 +123,7 @@ $(document).ready(function() {
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(userData),
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     showMessage(response.message, 'success');
                     $('#userForm')[0].reset();
@@ -132,20 +133,20 @@ $(document).ready(function() {
                     showMessage(response.message, 'error');
                 }
             },
-            error: function() {
+            error: function () {
                 showMessage('사용자 추가에 실패했습니다.', 'error');
             }
         });
     });
 
     // 새로고침 버튼
-    $('#refreshBtn').on('click', function() {
+    $('#refreshBtn').on('click', function () {
         loadUsers();
         loadStats();
     });
 
     // 필터 버튼 이벤트
-    $('.filter-btn').on('click', function() {
+    $('.filter-btn').on('click', function () {
         var filter = $(this).data('filter');
         AppState.setState({ filter: filter });
     });
@@ -157,8 +158,8 @@ $(document).ready(function() {
         $message.removeClass('success error');
         $message.addClass(type);
 
-        setTimeout(function() {
-            $message.fadeOut(function() {
+        setTimeout(function () {
+            $message.fadeOut(function () {
                 $message.hide().css('display', '');
             });
         }, 3000);

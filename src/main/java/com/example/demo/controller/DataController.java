@@ -1,7 +1,16 @@
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.*;
-import java.util.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -40,13 +49,13 @@ public class DataController {
     @PostMapping("/users")
     public Map<String, Object> createUser(@RequestBody Map<String, Object> user) {
         // 유효성 검사
-        if (!user.containsKey("name") || user.get("name").toString().trim().isEmpty()) {
+        if (!user.containsKey("name") || user.get("name").toString().isBlank()) {
             return Map.of(
                 "success", false,
                 "message", "이름을 입력해주세요."
             );
         }
-        if (!user.containsKey("email") || user.get("email").toString().trim().isEmpty()) {
+        if (!user.containsKey("email") || user.get("email").toString().isBlank()) {
             return Map.of(
                 "success", false,
                 "message", "이메일을 입력해주세요."

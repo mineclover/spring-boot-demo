@@ -3,7 +3,9 @@ package com.example.demo.repository;
 import com.example.demo.model.Post;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
@@ -58,8 +60,9 @@ public class PostRepository {
     }
 
     public Post save(Post post) {
+        Post savedPost = post;
         if (post.getId() == null) {
-            post = new Post(
+            savedPost = new Post(
                 idCounter.getAndIncrement(),
                 post.getTitle(),
                 post.getContent(),
@@ -67,8 +70,8 @@ public class PostRepository {
                 post.getAuthorName()
             );
         }
-        posts.put(post.getId(), post);
-        return post;
+        posts.put(savedPost.getId(), savedPost);
+        return savedPost;
     }
 
     public void deleteById(Long id) {

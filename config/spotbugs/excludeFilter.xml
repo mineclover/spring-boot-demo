@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <!-- Ignore EI_EXPOSE_REP2 warnings for Spring dependency injection -->
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <!-- Ignore ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD for demo code -->
+    <Match>
+        <Class name="com.example.demo.controller.DataController"/>
+        <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
+    </Match>
+</FindBugsFilter>

@@ -2,6 +2,10 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.0'
 	id 'io.spring.dependency-management' version '1.1.4'
+	id 'checkstyle'
+	id 'pmd'
+	id 'com.github.spotbugs' version '6.0.7'
+	id 'jacoco'
 }
 
 group = 'com.example'
@@ -23,4 +27,64 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+// Code Quality Configuration
+checkstyle {
+	toolVersion = '10.12.5'
+	configFile = file('config/checkstyle/checkstyle.xml')
+	ignoreFailures = false
+	maxWarnings = 0
+}
+
+pmd {
+	toolVersion = '7.0.0'
+	ruleSets = []
+	ruleSetFiles = files('config/pmd/pmd-ruleset.xml')
+	ignoreFailures = false
+}
+
+spotbugs {
+	ignoreFailures = false
+	excludeFilter = file('config/spotbugs/excludeFilter.xml')
+}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
+	reports {
+		html.required = true
+		xml.required = false
+	}
+}
+
+// JaCoCo Configuration
+jacoco {
+	toolVersion = '0.8.11'
+}
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		xml.required = true
+		html.required = true
+		csv.required = false
+	}
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.60
+			}
+		}
+	}
+}
+
+test.finalizedBy jacocoTestReport
+
+// Quality check task
+task qualityCheck {
+	dependsOn 'checkstyleMain', 'pmdMain', 'spotbugsMain', 'test', 'jacocoTestReport'
+	group = 'verification'
+	description = 'Run all code quality checks'
 }
