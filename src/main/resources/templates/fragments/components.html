@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<!-- Card 컴포넌트 -->
+<div th:fragment="card(title, description, icon, link, linkText)" class="component-card">
+    <div class="card-icon" th:text="${icon}"></div>
+    <h3 th:text="${title}"></h3>
+    <p th:text="${description}"></p>
+    <a th:href="${link}" class="card-link" th:text="${linkText}"></a>
+</div>
+
+<!-- Button 컴포넌트 -->
+<button th:fragment="button(text, type, dataAction)"
+        th:class="${'btn btn-' + type}"
+        th:attr="data-action=${dataAction}"
+        th:text="${text}">
+</button>
+
+<!-- Alert 컴포넌트 -->
+<div th:fragment="alert(message, type)"
+     th:class="${'alert alert-' + type}">
+    <span class="alert-icon" th:text="${type == 'success' ? '✓' : (type == 'error' ? '✗' : 'ℹ')}"></span>
+    <span th:text="${message}"></span>
+</div>
+
+<!-- Badge 컴포넌트 -->
+<span th:fragment="badge(text, type)"
+      th:class="${'badge badge-' + type}"
+      th:text="${text}">
+</span>
+
+<!-- User Card 컴포넌트 -->
+<div th:fragment="userCard(user)" class="user-profile-card">
+    <div class="user-avatar" th:text="${#strings.substring(user.username, 0, 1)}"></div>
+    <div class="user-info">
+        <h4 th:text="${user.username}"></h4>
+        <p th:text="${user.email}"></p>
+        <span th:replace="~{fragments/components :: badge(${user.role}, ${user.role == 'ADMIN' ? 'primary' : 'secondary'})}"></span>
+    </div>
+</div>
+
+<!-- Loading Spinner 컴포넌트 -->
+<div th:fragment="spinner(size)" th:class="${'spinner spinner-' + size}">
+    <div class="spinner-inner"></div>
+</div>
+
+<!-- Modal Header 컴포넌트 -->
+<div th:fragment="modalHeader(title)" class="modal-header">
+    <h3 th:text="${title}"></h3>
+    <button class="modal-close" onclick="closeModal()">×</button>
+</div>
+
+<!-- Input Field 컴포넌트 -->
+<div th:fragment="inputField(id, label, placeholder, type)" class="form-group">
+    <label th:for="${id}" th:text="${label}"></label>
+    <input th:id="${id}"
+           th:type="${type != null ? type : 'text'}"
+           th:placeholder="${placeholder}"
+           class="form-control">
+</div>
+
+</body>
+</html>

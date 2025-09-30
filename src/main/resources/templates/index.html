@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spring Boot Demo</title>
+    <link rel="stylesheet" href="/css/components.css">
     <style>
         * {
             margin: 0;
@@ -17,70 +18,133 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 2rem;
         }
         .container {
             text-align: center;
             color: white;
+            max-width: 1200px;
         }
         h1 {
             font-size: 3rem;
             margin-bottom: 1rem;
         }
-        p {
+        .subtitle {
             font-size: 1.2rem;
             margin-bottom: 3rem;
             opacity: 0.9;
         }
-        .cards {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-        }
-        .card {
-            background: white;
-            color: #333;
+        .links-section {
+            background: rgba(255,255,255,0.1);
             padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            width: 300px;
-            transition: transform 0.3s;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
         }
-        .card:hover {
-            transform: translateY(-10px);
+        .links-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
         }
-        .card h2 {
-            margin-bottom: 1rem;
-            color: #667eea;
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            text-align: left;
         }
-        .card p {
-            color: #666;
-            font-size: 1rem;
-            margin-bottom: 2rem;
+        .link-item {
+            background: rgba(255,255,255,0.15);
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
         }
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 2rem;
-            background: #667eea;
+        .link-item:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+        .link-item a {
             color: white;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s;
+            font-weight: 500;
         }
-        .btn:hover {
-            background: #764ba2;
+        .link-item a:hover {
+            text-decoration: underline;
+        }
+        .link-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.3rem;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🚀 Spring Boot Demo</h1>
-        <p>jQuery + Thymeleaf SSR 데모</p>
-        <div class="cards">
-            <div class="card">
-                <h2>💻 jQuery + Thymeleaf</h2>
-                <p>서버 사이드 렌더링(SSR)과 jQuery를 사용한 상태 관리 데모</p>
-                <a href="/jquery" class="btn">데모 보기</a>
+        <p class="subtitle">jQuery + Thymeleaf SSR 데모</p>
+
+        <div class="links-section">
+            <h3>📑 Available Endpoints</h3>
+            <div class="links-grid">
+                <div class="link-item">
+                    <a href="http://localhost:8080/">🏠 Home</a>
+                    <div class="link-desc">메인 페이지</div>
+                </div>
+                <div class="link-item">
+                    <a href="http://localhost:8080/jquery">💻 jQuery Demo</a>
+                    <div class="link-desc">상태 관리 데모</div>
+                </div>
+                <div class="link-item">
+                    <a href="http://localhost:8080/session">🔐 Session Demo</a>
+                    <div class="link-desc">세션 관리 데모</div>
+                </div>
+                <div class="link-item">
+                    <a href="http://localhost:8080/components">🎨 Components</a>
+                    <div class="link-desc">UI 컴포넌트 라이브러리</div>
+                </div>
+                <div class="link-item">
+                    <a href="http://localhost:8080/api/hello">📡 Hello API</a>
+                    <div class="link-desc">REST API 테스트</div>
+                </div>
+                <div class="link-item">
+                    <a href="http://localhost:8080/api/users">👥 Users API</a>
+                    <div class="link-desc">사용자 목록 조회</div>
+                </div>
+                <div class="link-item">
+                    <a href="http://localhost:8080/api/stats">📊 Stats API</a>
+                    <div class="link-desc">통계 정보 조회</div>
+                </div>
             </div>
+        </div>
+
+        <div class="cards">
+            <div th:replace="~{fragments/components :: card(
+                'jQuery 상태 관리',
+                '서버 사이드 렌더링(SSR)과 jQuery를 사용한 상태 관리 데모',
+                '💻',
+                '/jquery',
+                '데모 보기'
+            )}"></div>
+
+            <div th:replace="~{fragments/components :: card(
+                '세션 관리',
+                '사용자 간 세션 전환과 권한 관리 데모',
+                '🔐',
+                '/session',
+                '데모 보기'
+            )}"></div>
+
+            <div th:replace="~{fragments/components :: card(
+                'UI 컴포넌트',
+                'Thymeleaf Fragment 기반 재사용 가능한 UI 컴포넌트 라이브러리',
+                '🎨',
+                '/components',
+                '데모 보기'
+            )}"></div>
         </div>
     </div>
 </body>

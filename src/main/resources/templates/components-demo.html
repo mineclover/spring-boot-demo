@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Components Demo</title>
+    <link rel="stylesheet" href="/css/components.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .demo-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+        .demo-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .demo-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+        .component-showcase {
+            display: grid;
+            gap: 1.5rem;
+        }
+        .component-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .code-block {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            overflow-x: auto;
+        }
+        .code-block code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🎨 UI Components Library</h1>
+            <p>Thymeleaf Fragment 기반 재사용 가능한 컴포넌트 데모</p>
+        </div>
+
+        <!-- Card Components -->
+        <div class="section">
+            <h2>Card Components</h2>
+            <div class="cards-grid">
+                <div th:replace="~{fragments/components :: card(
+                    'Dashboard',
+                    'View your analytics and metrics in real-time',
+                    '📊',
+                    '/jquery',
+                    'Open Dashboard'
+                )}"></div>
+
+                <div th:replace="~{fragments/components :: card(
+                    'Session Demo',
+                    'Test session management and user switching',
+                    '🔐',
+                    '/session',
+                    'Try Session'
+                )}"></div>
+
+                <div th:replace="~{fragments/components :: card(
+                    'Settings',
+                    'Configure your application preferences',
+                    '⚙️',
+                    '#',
+                    'Open Settings'
+                )}"></div>
+            </div>
+
+            <div class="code-block">
+                <code>
+&lt;div th:replace="~{fragments/components :: card(<br>
+&nbsp;&nbsp;'Title', 'Description', '🎯', '/link', 'Button Text'<br>
+)}"&gt;&lt;/div&gt;
+                </code>
+            </div>
+        </div>
+
+        <!-- Button Components -->
+        <div class="section">
+            <h2>Button Components</h2>
+            <div class="component-showcase">
+                <div class="component-row">
+                    <button th:replace="~{fragments/components :: button('Primary Button', 'primary', 'primary-action')}" onclick="alert('Primary clicked!')"></button>
+                    <button th:replace="~{fragments/components :: button('Secondary Button', 'secondary', 'secondary-action')}" onclick="alert('Secondary clicked!')"></button>
+                    <button th:replace="~{fragments/components :: button('Success Button', 'success', 'success-action')}" onclick="alert('Success clicked!')"></button>
+                    <button th:replace="~{fragments/components :: button('Danger Button', 'danger', 'danger-action')}" onclick="alert('Danger clicked!')"></button>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <code>
+&lt;button th:replace="~{fragments/components :: button('Text', 'primary', 'action-id')}" onclick="yourFunction()"&gt;&lt;/button&gt;
+                </code>
+            </div>
+        </div>
+
+        <!-- Alert Components -->
+        <div class="section">
+            <h2>Alert Components</h2>
+            <div class="component-showcase">
+                <div th:replace="~{fragments/components :: alert('This is a success message!', 'success')}"></div>
+                <div th:replace="~{fragments/components :: alert('This is an error message!', 'error')}"></div>
+                <div th:replace="~{fragments/components :: alert('This is an info message!', 'info')}"></div>
+                <div th:replace="~{fragments/components :: alert('This is a warning message!', 'warning')}"></div>
+            </div>
+
+            <div class="code-block">
+                <code>
+&lt;div th:replace="~{fragments/components :: alert('Message', 'success')}"&gt;&lt;/div&gt;
+                </code>
+            </div>
+        </div>
+
+        <!-- Badge Components -->
+        <div class="section">
+            <h2>Badge Components</h2>
+            <div class="component-row">
+                <span th:replace="~{fragments/components :: badge('Primary', 'primary')}"></span>
+                <span th:replace="~{fragments/components :: badge('Secondary', 'secondary')}"></span>
+                <span th:replace="~{fragments/components :: badge('Success', 'success')}"></span>
+                <span th:replace="~{fragments/components :: badge('Danger', 'danger')}"></span>
+            </div>
+
+            <div class="code-block">
+                <code>
+&lt;span th:replace="~{fragments/components :: badge('Text', 'primary')}"&gt;&lt;/span&gt;
+                </code>
+            </div>
+        </div>
+
+        <!-- User Card Components -->
+        <div class="section">
+            <h2>User Card Components</h2>
+            <div class="component-showcase" style="display: grid; gap: 1rem;">
+                <div th:each="user : ${users}">
+                    <div th:replace="~{fragments/components :: userCard(${user})}"></div>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <code>
+&lt;div th:replace="~{fragments/components :: userCard(${user})}"&gt;&lt;/div&gt;
+                </code>
+            </div>
+        </div>
+
+        <!-- Spinner Components -->
+        <div class="section">
+            <h2>Loading Spinner Components</h2>
+            <div class="component-row">
+                <div th:replace="~{fragments/components :: spinner('small')}"></div>
+                <div th:replace="~{fragments/components :: spinner('medium')}"></div>
+                <div th:replace="~{fragments/components :: spinner('large')}"></div>
+            </div>
+
+            <div class="code-block">
+                <code>
+&lt;div th:replace="~{fragments/components :: spinner('medium')}"&gt;&lt;/div&gt;
+                </code>
+            </div>
+        </div>
+
+        <!-- Input Field Components -->
+        <div class="section">
+            <h2>Input Field Components</h2>
+            <div class="component-showcase">
+                <div th:replace="~{fragments/components :: inputField('username', 'Username', 'Enter your username', 'text')}"></div>
+                <div th:replace="~{fragments/components :: inputField('email', 'Email', 'Enter your email', 'email')}"></div>
+                <div th:replace="~{fragments/components :: inputField('password', 'Password', 'Enter your password', 'password')}"></div>
+            </div>
+
+            <div class="code-block">
+                <code>
+&lt;div th:replace="~{fragments/components :: inputField('id', 'Label', 'Placeholder', 'text')}"&gt;&lt;/div&gt;
+                </code>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
