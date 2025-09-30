@@ -28,7 +28,6 @@ Thymeleaf 템플릿 엔진과 jQuery를 활용한 사용자 관리 및 세션 �
 - **SpotBugs** (버그 패턴 검색)
 - **ESLint** (JavaScript 린팅)
 - **JaCoCo** (테스트 커버리지)
-- **Husky** (Git pre-commit hooks)
 - **GitHub Actions** (CI/CD 파이프라인)
 
 ## 실행 방법
@@ -127,6 +126,55 @@ http://localhost:8080
 - 관리자는 모든 게시글 삭제 가능
 - Toast 알림 시스템
 
+## 기능 테스트
+
+### 빌드 및 품질 검사
+```bash
+# 전체 빌드 (품질 검사 포함)
+./gradlew clean build
+
+# 품질 검사만 실행
+./gradlew qualityCheck
+
+# JavaScript 린팅
+npm run lint
+```
+
+### API 테스트
+```bash
+# 애플리케이션 실행
+./gradlew bootRun
+
+# 다른 터미널에서 API 테스트
+# 사용자 목록 조회
+curl http://localhost:8080/api/users
+
+# 세션 사용자 조회
+curl http://localhost:8080/session/users
+
+# 게시글 목록 조회
+curl http://localhost:8080/session/posts
+
+# 통계 조회
+curl http://localhost:8080/api/stats
+```
+
+### 브라우저 테스트
+1. **메인 페이지**: http://localhost:8080
+   - 모든 엔드포인트 링크 확인
+
+2. **jQuery 상태 관리**: http://localhost:8080/jquery
+   - 사용자 필터링 테스트
+   - 상태 디버거 확인
+
+3. **세션 관리**: http://localhost:8080/session
+   - 사용자 클릭하여 로그인
+   - 게시글 작성/삭제 테스트
+   - 권한별 기능 테스트 (USER/ADMIN)
+
+4. **UI 컴포넌트**: http://localhost:8080/components
+   - 모든 컴포넌트 동작 확인
+
 ## 품질 관리
 
 ### 코드 품질 도구 실행
@@ -161,22 +209,6 @@ npm run lint:fix  # 자동 수정
 - **SpotBugs**: `build/reports/spotbugs/main.html`
 - **JaCoCo**: `build/reports/jacoco/test/html/index.html`
 - **Test**: `build/reports/tests/test/index.html`
-
-### Pre-commit Hooks
-
-Git commit 전에 자동으로 코드 품질 검사가 실행됩니다.
-
-```bash
-# Husky 및 의존성 설치
-npm install
-
-# pre-commit hook 설치 (자동)
-npm run prepare
-```
-
-커밋 시 다음이 자동 실행됩니다:
-- JavaScript: ESLint (자동 수정)
-- Java: Checkstyle, PMD
 
 ### CI/CD
 
